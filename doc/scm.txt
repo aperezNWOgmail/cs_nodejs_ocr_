@@ -40,7 +40,7 @@ git remote set-url origin   https://Exam70486:YOUR_TOKEN@github.com/Exam70486/cs
 (allow secrets when needed)
 
 git add * 
-git commit -m"docker cchanges" -a 
+git commit -m"docker changes" -a 
 git push 
 git pull 
 
@@ -80,7 +80,7 @@ sudo apt-get install libopencv-dev
     "node-ocr": "^0.8.2",
 
     # try all installation
-    npm install
+    npm install --force --legacy-peer-deps
     
 ################################################    
 
