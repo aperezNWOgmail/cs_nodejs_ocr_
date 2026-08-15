@@ -2,8 +2,7 @@ FROM node:20-bullseye
 
 WORKDIR /app
 
-# canvas (node-canvas) needs these system libs to compile its native binding.
-# @techstark/opencv-js is pure WASM — no system OpenCV needed at all.
+# Install system dependencies including OpenCV development files, Cairo, Tesseract, etc.
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     libcairo2-dev \
@@ -13,15 +12,19 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     librsvg2-dev \
     tesseract-ocr \
     tesseract-ocr-eng \
+    libopencv-dev \
     python3 \
     && rm -rf /var/lib/apt/lists/*
 
-# Skip opencv4nodejs native build entirely — we no longer need it
+# Set explicit environment variables for OpenCV native compilation
 ENV OPENCV4NODEJS_DISABLE_AUTOBUILD=1
+ENV OPENCV_INCLUDE_DIR=/usr/include/opencv4
+ENV OPENCV_LIB_DIR=/usr/lib/x86_64-linux-gnu
+ENV OPENCV_BIN_DIR=/usr/bin
 
 COPY package.json package-lock.json* ./
 
-# Install with scripts enabled so node-canvas can compile its binding
+# Install packages with scripts enabled so native bindings can compile
 RUN npm ci
 
 COPY . .
