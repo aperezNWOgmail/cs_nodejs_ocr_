@@ -2,12 +2,32 @@
 const _express = require("express");
 const app = _express();
 const cors = require("cors");
-const port = process.env.PORT || 3000;   // Render injects $PORT at runtime
+const port = process.env.PORT || 3000;   // Render injects $PORT at runtime[cite: 2]
 const VisionHubService = require("./services/VisionHubService");
 const engine = require("./services/FractalEngine");
 
 app.use(_express.json({ limit: "10mb" }));
 app.use(cors());
+
+//////////////////////////////////////////////////
+// MIDDLEWARE: HTTP Request Logger for Render
+//////////////////////////////////////////////////
+app.use((req, res, next) => {
+  const start = Date.now();
+  res.on('finish', () => {
+    const duration = Date.now() - start;
+    const logMessage = `[HTTP] ${req.method} ${req.originalUrl || req.url} - Status: ${res.statusCode} - ${duration}ms - IP: ${req.ip}`;
+    console.log(logMessage);
+  });
+  next();
+});
+
+//////////////////////////////////////////////////
+// PING ENDPOINT: Returns zero kb data
+//////////////////////////////////////////////////
+app.get("/ping", (req, res) => {
+  res.status(204).send(); // 204 No Content responds with zero bytes of data
+});
 
 //////////////////////////////////////////////////
 // TESSERACT  - OCR
@@ -141,16 +161,20 @@ app.get("/health", (req, res) => {
   res.status(200).json({
     status: "OK",
     service: "VisionHub",
+    nodeVersion: process.version,
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString(),
     endpoints: [
-      "POST /api/OCR/uploadOCR                - Tesseract  -- (ocr / text extraction)",
-      "POST /api/OpenCv/uploadCV              - OpenCv     -- (shape detection)",
-      "GET  /api/OpenCv/generateJulia         - OpenCv     -- (fractal generation)",
-      "GET  /api/OpenCv/generateJuliaImage    - OpenCv     -- (fractal generation)",
-      "GET  /api/fractal/julia                - Javascript -- (fractal generation)",
-      "GET  /api/fractal/mandelbrot           - Javascript -- (fractal generation)",
-      "GET  /api/fractal/leaf                 - Javascript -- (fractal generation)",
-      "GET  /getNodeVersion                   - Get backend version",
-      "GET  /health                           - Service health check",
+      "GET  /ping                                   - Returns zero KB (204 No Content) response",
+      "POST /api/OCR/uploadOCR                - Tesseract  -- (ocr / text extraction)[cite: 2]",
+      "POST /api/OpenCv/uploadCV              - OpenCv     -- (shape detection)[cite: 2]",
+      "GET  /api/OpenCv/generateJulia         - OpenCv     -- (fractal generation)[cite: 2]",
+      "GET  /api/OpenCv/generateJuliaImage    - OpenCv     -- (fractal generation)[cite: 2]",
+      "GET  /api/fractal/julia                - Javascript -- (fractal generation)[cite: 2]",
+      "GET  /api/fractal/mandelbrot           - Javascript -- (fractal generation)[cite: 2]",
+      "GET  /api/fractal/leaf                 - Javascript -- (fractal generation)[cite: 2]",
+      "GET  /getNodeVersion                   - Get backend version[cite: 2]",
+      "GET  /health                           - Service health check & route catalog[cite: 2]",
     ],
   });
 });
