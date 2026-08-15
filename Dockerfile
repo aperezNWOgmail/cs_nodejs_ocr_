@@ -2,7 +2,7 @@ FROM node:20-bullseye
 
 WORKDIR /app
 
-# Install system dependencies including OpenCV development files, Cairo, Tesseract, etc.
+# Install system dependencies for canvas, tesseract, and native OpenCV compilation
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     libcairo2-dev \
@@ -24,7 +24,7 @@ ENV OPENCV_BIN_DIR=/usr/bin
 
 COPY package.json package-lock.json* ./
 
-# Install packages with scripts enabled so native bindings can compile
+# Install packages with scripts enabled so native bindings compile properly
 RUN npm ci
 
 COPY . .

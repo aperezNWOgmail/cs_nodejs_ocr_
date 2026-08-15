@@ -1,7 +1,6 @@
 {
   "dependencies": {
     "@techstark/opencv-js": "^5.0.0-release.1",
-    "@u4/opencv4nodejs": "^7.1.2",
     "canvas": "^3.2.3",
     "cors": "^2.8.6",
     "express": "^5.2.1",
