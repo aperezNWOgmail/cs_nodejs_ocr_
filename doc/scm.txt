@@ -101,7 +101,6 @@ df -h . && du -h --max-depth=1 | sort -hr
 # create a tag previous to publish
     docker tag cs_nodejs_ocr:latest apereznwogmail/cs_nodejs_ocr:latest
 
-
 # list images built
     docker image ls 
 
