@@ -161,7 +161,7 @@ app.get('/getNodeVersion', (req, res) => {
 
 // Server Framework Version Endpoint (Express version)
 // 2. Server Framework Version Endpoint
-app.get('/api/server-version', (req, res) => {
+app.get('/getNodeWebServerVersion', (req, res) => {
     res.json({
         server: 'Express',
         version: packageJson.version
