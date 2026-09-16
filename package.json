@@ -1,4 +1,7 @@
 {
+  "name": "cs_nodejs_ocr",
+  "version": "1.0.0.3",
+  "main": "index.js",
   "dependencies": {
     "@techstark/opencv-js": "^5.0.0-release.1",
     "canvas": "^3.2.3",

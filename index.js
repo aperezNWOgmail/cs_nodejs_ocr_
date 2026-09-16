@@ -5,8 +5,6 @@ const cors             = require("cors");
 const port             = process.env.PORT || 3000;   // Render injects $PORT at runtime 
 const VisionHubService = require("./services/VisionHubService");
 const engine           = require("./services/FractalEngine");
-const packageJson      = require("./package.json");
-
 
 app.use(_express.json({ limit: "10mb" }));
 app.use(cors());
@@ -159,13 +157,13 @@ app.get('/getNodeVersion', (req, res) => {
     res.send(process.version);
 });
 
-// Server Framework Version Endpoint (Express version)
-// 2. Server Framework Version Endpoint
+const packageJson = require('./package.json');
+
 app.get('/getNodeWebServerVersion', (req, res) => {
-    res.json({
-        server: 'Express',
-        version: packageJson.version
-    });
+  res.json({
+    server: "express",
+    version: packageJson.version // Looks for "version": "1.0.0.3" in package.json
+  });
 });
 /////////////////////////////////////////////////////////////////////////////////
 
