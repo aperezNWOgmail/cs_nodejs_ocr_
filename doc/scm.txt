@@ -96,26 +96,29 @@ df -h . && du -h --max-depth=1 | sort -hr
 
 # docker must be installed on desktop. it was from codespaces, only visual studio code extensions was installed
 # dot included !!!!
-1) docker buildx build -t cs_nodejs_ocr .
+    docker buildx build -t cs_nodejs_ocr .
 
 # create a tag previous to publish
-3) docker tag cs_nodejs_ocr:latest apereznwogmail/cs_nodejs_ocr:latest
+    docker tag cs_nodejs_ocr:latest apereznwogmail/cs_nodejs_ocr:latest
 
 
 # list images built
-2) docker image ls 
+    docker image ls 
 
-# log into docker for publish
-# get PAT from https://app.docker.com/accounts/apereznwogmail/settings/personal-access-tokens
-## must return 'Login Succeeded'
-4) echo "YOUR_PAT_HERE" | docker login --username apereznwogmail --password-stdin
+## (codespaces) - log into docker for publish 
+    # get PAT from https://app.docker.com/accounts/apereznwogmail/settings/personal-access-tokens
+    # must return 'Login Succeeded'
+        echo "YOUR_PAT_HERE" | docker login --username apereznwogmail --password-stdin
+
+## (docker desktop) - log into docker for publish 
+        docker login
 
 # publish in docker hub
 # https://hub.docker.com/
-5) docker push apereznwogmail/cs_nodejs_ocr:latest
+    docker push apereznwogmail/cs_nodejs_ocr:latest
 
 # URL FOR RENDER : https://dashboard.render.com/
-6) docker.io/apereznwogmail/cs_nodejs_ocr:latest
+    docker.io/apereznwogmail/cs_nodejs_ocr:latest
 
 --------------------------
 --------------------------

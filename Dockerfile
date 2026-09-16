@@ -1,6 +1,12 @@
-FROM node:20-bullseye
+# FROM node:20-bullseye
+FROM node:20-bookworm
 
 WORKDIR /app
+
+# Add this command to your Dockerfile right before you run apt-get update:
+RUN sed -i -e 's/deb.debian.org/archive.debian.org/g' \
+           -e 's|security.debian.org/debian-security|archive.debian.org/debian-security|g' \
+           -e '/proposed-updates/d' /etc/apt/sources.list
 
 # Install system dependencies for canvas, tesseract, and native OpenCV compilation
 RUN apt-get update && apt-get install -y --no-install-recommends \
